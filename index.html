@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Soslingmas SV IPB - Database Lengkap</title>
+    <title>Dashboard Soslingmas SV IPB - 14 Desa Lengkap</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
@@ -71,10 +71,7 @@
                 <div class="bg-amber-50 p-3 rounded-lg mb-3 border border-amber-100">
                     <div class="text-[10px] text-amber-700 uppercase font-bold mb-1">Fasilitas Terdekat</div>
                     <div class="text-sm font-bold text-slate-800 flex items-center gap-2">
-                        <i class="fas fa-clinic-medical text-red-500"></i> Puskesmas: <span id="dataPuskesmas">...</span>
-                    </div>
-                    <div class="text-sm font-bold text-slate-800 flex items-center gap-2 mt-1">
-                        <i class="fas fa-users text-blue-500"></i> Kantor PKK: <span id="dataPKK">...</span>
+                        <i class="fas fa-clinic-medical text-red-500"></i> Fasilitas: <span id="dataPuskesmas" class="font-normal text-xs text-slate-600">...</span>
                     </div>
                 </div>
                 <p class="text-sm text-slate-600 h-12" id="reasonAccess">...</p>
@@ -87,19 +84,19 @@
                 </div>
                 <div class="bg-emerald-50 p-3 rounded-lg mb-3">
                     <div class="text-[10px] text-emerald-700 uppercase font-bold mb-1">Fokus Proker</div>
-                    <div class="font-bold text-slate-800" id="dataEnv">...</div>
+                    <div class="font-bold text-slate-800 text-sm" id="dataEnv">...</div>
                 </div>
                 <p class="text-sm text-slate-600 h-12" id="reasonEnv">...</p>
             </div>
 
             <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
                 <div class="flex justify-between items-start mb-4">
-                    <h3 class="font-bold text-slate-800"><i class="fas fa-shield-alt text-red-500 mr-2"></i>Keamanan</h3>
+                    <h3 class="font-bold text-slate-800"><i class="fas fa-shield-alt text-red-500 mr-2"></i>Akses Jalan</h3>
                     <span class="text-xl font-bold text-red-600" id="scoreSafety">0%</span>
                 </div>
                 <div class="bg-red-50 p-3 rounded-lg mb-3">
-                    <div class="text-[10px] text-red-700 uppercase font-bold mb-1">Status Keamanan</div>
-                    <div class="font-bold text-slate-800" id="dataSafety">...</div>
+                    <div class="text-[10px] text-red-700 uppercase font-bold mb-1">Kondisi Jalan</div>
+                    <div class="font-bold text-slate-800 text-sm" id="dataSafety">...</div>
                 </div>
                 <p class="text-sm text-slate-600 h-12" id="reasonSafety">...</p>
             </div>
@@ -117,19 +114,20 @@
 
     <script>
         const database = [
-            // DATA ASLI
-            { id: 1, name: "Desa Sukamantri", district: "Kec. Tamansari", scores: [86, 90, 95, 92], total: 91, distVal: "±11.5 KM", fasum: ["Tersedia (Puskesmas Tamansari)", "Sangat Aktif"], envVal: "Edu-Wisata Pertanian", safetyVal: "Zona Hijau (Sangat Aman)", reasons: ["Akses ideal via BNR.", "Bis medium bisa masuk.", "Masyarakat kooperatif.", "Poskamling aktif."], map: "https://www.google.com/maps/dir/Sekolah+Vokasi+IPB+University,+Jl.+Kumbang,+RT.02%2FRW.06,+Babakan,+Bogor+City,+West+Java/Sindangsari,+Bogor+City,+West+Java/2" },
-            { id: 2, name: "Desa Bantarsari", district: "Kec. Rancabungur", scores: [82, 85, 80, 85], total: 83, distVal: "±13.8 KM", fasum: ["Tersedia (Puskesmas Rancabungur)", "Aktif"], envVal: "Sanitasi & Limbah", safetyVal: "Zona Kuning", reasons: ["Jarak dekat via Yasmin.", "Jalan beton sedang.", "Isu sampah rumah tangga.", "Lalu lintas malam ramai."], map: "https://www.google.com/maps/dir/Sekolah+Vokasi+IPB+University,+Jl.+Kumbang,+RT.02%2FRW.06,+Babakan,+Bogor+City,+West+Java/Sindangsari,+Bogor+City,+West+Java/3" },
-            { id: 3, name: "Desa Benteng", district: "Kec. Ciampea", scores: [84, 88, 75, 80], total: 82, distVal: "±16 KM", fasum: ["Ada (Puskesmas Ciampea)", "Tersedia"], envVal: "UMKM Pangan", safetyVal: "Zona Hijau", reasons: ["Akses utama via Dramaga.", "Jalan raya besar.", "Potensi kewirausahaan.", "Masyarakat terbuka."], map: "https://www.google.com/maps/dir/Sekolah+Vokasi+IPB+University,+Jl.+Kumbang,+RT.02%2FRW.06,+Babakan,+Bogor+City,+West+Java/Sindangsari,+Bogor+City,+West+Java/4" },
-            { id: 4, name: "Desa Purwabakti", district: "Kec. Pamijahan", scores: [70, 70, 98, 88], total: 72, distVal: "±28 KM", fasum: ["Jauh (Puskesmas Pamijahan)", "Terbatas"], envVal: "Konservasi & Sosial", safetyVal: "Aman Lokal", reasons: ["Jarak cukup jauh.", "Jalan menanjak curam.", "Impact proker tertinggi.", "Warga sangat guyub."], map: "https://www.google.com/maps/dir/Sekolah+Vokasi+IPB+University,+Jl.+Kumbang,+RT.02%2FRW.06,+Babakan,+Bogor+City,+West+Java/Sindangsari,+Bogor+City,+West+Java/5" },
-
-            // DATA SEKITAR SV
-            { id: 5, name: "Kel. Babakan", district: "Kec. Bogor Tengah", scores: [98, 95, 85, 95], total: 94, distVal: "< 1 KM", fasum: ["Lengkap (Puskesmas Bogor Tengah)", "Sangat Aktif"], envVal: "Limbah Kost Mahasiswa", safetyVal: "Sangat Aman", reasons: ["Sangat dekat (Jalan kaki).", "Akses kota terbaik.", "Manajemen sampah padat.", "Dekat kantor polisi."], map: "https://www.google.com/maps/dir/Sekolah+Vokasi+IPB+University,+Jl.+Kumbang,+RT.02%2FRW.06,+Babakan,+Bogor+City,+West+Java/Sindangsari,+Bogor+City,+West+Java/6" },
-            { id: 6, name: "Kel. Tegallega", district: "Kec. Bogor Tengah", scores: [96, 92, 88, 90], total: 92, distVal: "±2 KM", fasum: ["Tersedia", "Aktif"], envVal: "Urban Farming", safetyVal: "Aman", reasons: ["Sangat dekat.", "Angkot 24 jam.", "Lahan sempit produktif.", "Lingkungan teratur."], map: "https://www.google.com/maps/dir/Sekolah+Vokasi+IPB+University,+Jl.+Kumbang,+RT.02%2FRW.06,+Babakan,+Bogor+City,+West+Java/Sindangsari,+Bogor+City,+West+Java/7" },
-            { id: 10, name: "Kel. Sindangsari", district: "Kec. Bogor Timur (Tajur)", scores: [90, 95, 82, 90], total: 90, distVal: "±4.5 KM", fasum: ["Ada (Puskesmas Pulo Armyn)", "Aktif"], envVal: "Polusi Udara/Industri", safetyVal: "Sangat Aman", reasons: ["Akses lurus Pajajaran.", "Jalur angkot utama.", "Isu limbah bengkel/pabrik.", "Area ramai & terang."], map: "https://www.google.com/maps/dir/Sekolah+Vokasi+IPB+University,+Jl.+Kumbang,+RT.02%2FRW.06,+Babakan,+Bogor+City,+West+Java/Sindangsari,+Bogor+City,+West+Java/8" },
-            { id: 11, name: "Desa Bendogebang", district: "Kec. Ciawi", scores: [75, 80, 88, 85], total: 82, distVal: "±8.2 KM", fasum: ["Tersedia (Puskesmas Ciawi)", "Tersedia"], envVal: "Sampah Pasar & Niaga", safetyVal: "Aman", reasons: ["Jalur utama Ciawi.", "Rawan macet simpang.", "Masalah sampah pasar.", "Sistem keamanan blok."], map: "https://www.google.com/maps/dir/Sekolah+Vokasi+IPB+University,+Jl.+Kumbang,+RT.02%2FRW.06,+Babakan,+Bogor+City,+West+Java/Sindangsari,+Bogor+City,+West+Java/9" },
-            
-            // ... (Tambahkan sisa desa lainnya dengan format yang sama)
+            { id: 1, name: "Kel. Babakan", district: "Kec. Bogor Tengah", scores: [98, 95, 88, 95], total: 94, distVal: "±1.5 KM", fasum: "Puskesmas Bogor Tengah", envVal: "Pengelolaan Sampah Kost", safetyVal: "Jalan lebar, aspal mulus", reasons: ["Sangat dekat kampus.", "Akses kota terbaik.", "Manajemen sampah padat.", "Sinyal internet kuat."], map: "https://www.google.com/maps/dir/Sekolah+Vokasi+IPB/Kelurahan+Babakan" },
+            { id: 2, name: "Kel. Tegallega", district: "Kec. Bogor Tengah", scores: [96, 92, 85, 90], total: 91, distVal: "±2.0 KM", fasum: "Puskesmas & Klinik Dekat", envVal: "Urban Farming Lahan Sempit", safetyVal: "Jalan utama aspal mulus", reasons: ["Jarak tempuh < 10 menit.", "Sangat strategis.", "Potensi edukasi hidroponik.", "Akses angkot 24 jam."], map: "https://www.google.com/maps/dir/Sekolah+Vokasi+IPB/Kelurahan+Tegallega" },
+            { id: 3, name: "Desa Situ Gede", district: "Kec. Bogor Barat", scores: [90, 85, 95, 88], total: 90, distVal: "±8.2 KM", fasum: "Dekat RSUD Kota Bogor", envVal: "Konservasi Hutan & Danau", safetyVal: "Jalan cukup lebar", reasons: ["Dekat area wisata CIFOR.", "Potensi Eco-Tourism.", "Waktu tempuh efisien.", "Kondusif untuk proker."], map: "https://www.google.com/maps/dir/Sekolah+Vokasi+IPB/Situ+Gede+Bogor" },
+            { id: 4, name: "Kel. Sindangsari", district: "Kec. Bogor Timur", scores: [90, 88, 82, 85], total: 86, distVal: "±8.5 KM", fasum: "Puskesmas Pulo Armyn", envVal: "Polusi Udara & Industri", safetyVal: "Jalan Raya Pajajaran", reasons: ["Akses jalur utama Tajur.", "Mudah dijangkau kendaraan.", "Isu limbah bengkel/pabrik.", "Dekat pusat niaga."], map: "https://www.google.com/maps/dir/Sekolah+Vokasi+IPB/Sindangsari+Bogor" },
+            { id: 5, name: "Desa Sukamantri", district: "Kec. Tamansari", scores: [86, 90, 92, 85], total: 88, distVal: "±11.5 KM", fasum: "Puskesmas Tamansari", envVal: "Edu-Wisata Pertanian", safetyVal: "Akses ideal via BNR", reasons: ["Akses sangat nyaman via BNR.", "Masyarakat sangat kooperatif.", "Udara bersih & sejuk.", "Bis medium bisa masuk."], map: "https://www.google.com/maps/dir/Sekolah+Vokasi+IPB/Sukamantri+Tamansari" },
+            { id: 6, name: "Desa Pasir Eurih", district: "Kec. Tamansari", scores: [85, 86, 90, 82], total: 86, distVal: "±11.8 KM", fasum: "Situs Budaya Sindang Barang", envVal: "Kearifan Lokal & Budaya", safetyVal: "Tanjakan sedang, aspal", reasons: ["Dekat wisata budaya.", "Kental kearifan lokal.", "Jalan memadai untuk bis.", "Suasana desa asri."], map: "https://www.google.com/maps/dir/Sekolah+Vokasi+IPB/Pasir+Eurih+Bogor" },
+            { id: 7, name: "Desa Kota Batu", district: "Kec. Ciomas", scores: [84, 82, 80, 80], total: 82, distVal: "±12.0 KM", fasum: "Puskesmas Ciomas", envVal: "Kepadatan Pemukiman", safetyVal: "Jalan aspal, ramai padat", reasons: ["Wilayah padat penduduk.", "Potensi edukasi sanitasi.", "Akses lewat Ciomas.", "Lalu lintas cukup ramai."], map: "https://www.google.com/maps/dir/Sekolah+Vokasi+IPB/Kota+Batu+Ciomas" },
+            { id: 8, name: "Desa Benteng", district: "Kec. Ciampea", scores: [84, 85, 88, 82], total: 85, distVal: "±12.5 KM", fasum: "Puskesmas Ciampea", envVal: "UMKM Pangan & Home Industry", safetyVal: "Jalan beton & aspal", reasons: ["Akses jalur utama Dramaga.", "Potensi pemberdayaan UMKM.", "Masyarakat terbuka.", "Sinyal HP stabil."], map: "https://www.google.com/maps/dir/Sekolah+Vokasi+IPB/Desa+Benteng+Ciampea" },
+            { id: 9, name: "Desa Bantarsari", district: "Kec. Rancabungur", scores: [82, 80, 82, 80], total: 81, distVal: "±13.8 KM", fasum: "Puskesmas Rancabungur", envVal: "Sanitasi & Sampah Rumah Tangga", safetyVal: "Akses via Yasmin (Beton)", reasons: ["Akses cepat via Yasmin.", "Kondisi jalan beton baik.", "Fokus isu sampah warga.", "Warga ramah tamah."], map: "https://www.google.com/maps/dir/Sekolah+Vokasi+IPB/Bantarsari+Rancabungur" },
+            { id: 10, name: "Desa Cikarawang", district: "Kec. Dramaga", scores: [82, 85, 92, 85], total: 86, distVal: "±14.0 KM", fasum: "Dekat Kampus Dramaga", envVal: "Budidaya Ubi & Pertanian", safetyVal: "Jalan aspal pedesaan", reasons: ["Pusat riset pertanian IPB.", "Warga sangat agraris.", "Potensi inovasi pangan.", "Akses jalan cukup mulus."], map: "https://www.google.com/maps/dir/Sekolah+Vokasi+IPB/Cikarawang+Dramaga" },
+            { id: 11, name: "Desa Cihideung Hilir", district: "Kec. Ciampea", scores: [80, 82, 85, 80], total: 82, distVal: "±15.0 KM", fasum: "Tersedia Bidan Desa", envVal: "Limbah Pertanian Tradisional", safetyVal: "Jalan aspal agak sempit", reasons: ["Sentra pembibitan tanaman.", "Masyarakat agraris kental.", "Akses via Ciampea.", "Sinyal internet cukup."], map: "https://www.google.com/maps/dir/Sekolah+Vokasi+IPB/Cihideung+Hilir" },
+            { id: 12, name: "Desa Sinarsari", district: "Kec. Dramaga", scores: [78, 80, 85, 78], total: 80, distVal: "±15.5 KM", fasum: "Puskesmas Dramaga", envVal: "Limbah Pemukiman Padat", safetyVal: "Jalan aspal, banyak tikungan", reasons: ["Dekat dengan lingkar IPB.", "Isu kebersihan lingkungan.", "Masyarakat beragam.", "Akses motor sangat mudah."], map: "https://www.google.com/maps/dir/Sekolah+Vokasi+IPB/Sinarsari+Dramaga" },
+            { id: 13, name: "Desa Bendogebang", district: "Kec. Ciawi", scores: [75, 78, 80, 72], total: 76, distVal: "±19.0 KM", fasum: "Puskesmas Ciawi", envVal: "Sampah Pasar & Niaga", safetyVal: "Rawan macet simpang", reasons: ["Dekat pusat keramaian Ciawi.", "Isu sampah pasar tradisional.", "Akses jalur Puncak.", "Fasilitas umum lengkap."], map: "https://www.google.com/maps/dir/Sekolah+Vokasi+IPB/Ciawi+Bogor" },
+            { id: 14, name: "Desa Purwabakti", district: "Kec. Pamijahan", scores: [70, 70, 98, 88], total: 82, distVal: "±28.0 KM", fasum: "Puskesmas Pamijahan (Jauh)", envVal: "Konservasi & Sosial Budaya", safetyVal: "Jalan menanjak & curam", reasons: ["Jarak terjauh namun dampak tinggi.", "Warga sangat menjunjung tradisi.", "Potensi alam luar biasa.", "Rasa kekeluargaan tinggi."], map: "https://www.google.com/maps/dir/Sekolah+Vokasi+IPB/Purwabakti+Pamijahan" }
         ];
 
         let chartInstance = null;
@@ -168,10 +166,9 @@
             document.getElementById('reasonDistance').innerText = data.reasons[0];
             document.getElementById('linkDistance').href = data.map;
 
-            // Akses & Fasum (UPDATED)
+            // Akses & Fasum
             document.getElementById('scoreAccess').innerText = data.scores[1] + "%";
-            document.getElementById('dataPuskesmas').innerText = data.fasum[0];
-            document.getElementById('dataPKK').innerText = data.fasum[1];
+            document.getElementById('dataPuskesmas').innerText = data.fasum;
             document.getElementById('reasonAccess').innerText = data.reasons[1];
 
             // Env
@@ -214,4 +211,3 @@
     </script>
 </body>
 </html>
-
